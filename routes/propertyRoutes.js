@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const propertyController = require('../controllers/propertyController');
 
-router.get('/search', propertyController.searchProperties);
-router.get('/stay-duration', propertyController.checkStayDuration);
-router.get('/properties', propertyController.filterProperties);
-router.get('/property/:id', propertyController.getPropertyDetails);
-router.post('/property', propertyController.createProperty);  // New route for creating a property
+router.get('/cities', propertyController.getAllCities);
+router.get('/streets', propertyController.getAllStreets);
+router.post('/properties', propertyController.createProperty);
+router.get('/properties', propertyController.getProperties);
+router.put('/properties/:id', propertyController.updateProperty);
+router.delete('/properties/:id', propertyController.deleteProperty);
 
 module.exports = router;

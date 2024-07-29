@@ -1,76 +1,63 @@
 const Property = require('../models/Property');
 
-const searchProperties = async (req, res) => {
-    const query = req.query.q;
+// Get all cities
+exports.getAllCities = async (req, res) => {
     try {
-        const properties = await Property.find({
-            $or: [
-                { location: new RegExp(query, 'i') },
-                { name: new RegExp(query, 'i') }
-            ]
-        });
-        res.json(properties);
-    } catch (error) {
-        res.status(500).json({ error: 'An error occurred while searching' });
+        const cities = await Property.distinct('location.city');
+        res.send(cities);
+    } catch (err) {
+        res.status(500).send(err);
     }
 };
 
-const checkStayDuration = (req, res) => {
-    const days = parseInt(req.query.days);
-    if (days >= 30) {
-        res.json({ valid: true });
-    } else {
-        res.json({ valid: false });
-    }
-};
-
-const filterProperties = async (req, res) => {
-    const { type, amenities } = req.query;
-    let filter = {};
-    if (type) {
-        filter.propertyType = type;
-    }
-    if (amenities) {
-        filter.amenities = { $all: amenities.split(',') };
-    }
+// Get all streets in a city
+exports.getAllStreets = async (req, res) => {
+    const city = req.query.city;
     try {
-        const properties = await Property.find(filter);
-        res.json(properties);
-    } catch (error) {
-        res.status(500).json({ error: 'An error occurred while fetching properties' });
+        const streets = await Property.distinct('location.street', { 'location.city': city });
+        res.send(streets);
+    } catch (err) {
+        res.status(500).send(err);
     }
 };
 
-const getPropertyDetails = async (req, res) => {
+// Create a property
+exports.createProperty = async (req, res) => {
     try {
-        const property = await Property.findById(req.params.id);
-        res.json(property);
-    } catch (error) {
-        res.status(500).json({ error: 'An error occurred while fetching property details' });
+        const property = new Property(req.body);
+        await property.save();
+        res.send(property);
+    } catch (err) {
+        res.status(500).send(err);
     }
 };
 
-const createProperty = async (req, res) => {
-    const { name, location, propertyType, amenities, images } = req.body;
+// Get properties
+exports.getProperties = async (req, res) => {
     try {
-        const newProperty = new Property({
-            name,
-            location,
-            propertyType,
-            amenities,
-            images
-        });
-        await newProperty.save();
-        res.status(201).json(newProperty);
-    } catch (error) {
-        res.status(500).json({ error: 'An error occurred while creating the property' });
+        const properties = await Property.find(req.query);
+        res.send(properties);
+    } catch (err) {
+        res.status(500).send(err);
     }
 };
 
-module.exports = {
-    searchProperties,
-    checkStayDuration,
-    filterProperties,
-    getPropertyDetails,
-    createProperty
+// Update a property
+exports.updateProperty = async (req, res) => {
+    try {
+        const property = await Property.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.send(property);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+// Delete a property
+exports.deleteProperty = async (req, res) => {
+    try {
+        await Property.findByIdAndDelete(req.params.id);
+        res.send({ message: 'Property deleted' });
+    } catch (err) {
+        res.status(500).send(err);
+    }
 };

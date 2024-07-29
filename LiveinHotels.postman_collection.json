@@ -1,0 +1,170 @@
+{
+    "info": {
+        "name": "LiveinHotels API",
+        "_postman_id": "abcd1234-5678-90ef-ghij-klmn5678opqr",
+        "description": "Collection for LiveinHotels API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Property",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Luxury Studio Apartment\",\n    \"location\": {\n        \"city\": \"Dubai\",\n        \"street\": \"Sheikh Zayed Road\"\n    },\n    \"property_type\": \"studio\",\n    \"amenities\": [\"parking\", \"restaurant\"],\n    \"images\": [\"image1.jpg\", \"image2.jpg\"]\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/properties",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "properties"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Properties",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:3000/api/properties",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "properties"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update Property",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Updated Luxury Studio Apartment\",\n    \"location\": {\n        \"city\": \"Dubai\",\n        \"street\": \"Updated Sheikh Zayed Road\"\n    },\n    \"property_type\": \"studio\",\n    \"amenities\": [\"parking\", \"gym\"],\n    \"images\": [\"updated_image1.jpg\", \"updated_image2.jpg\"]\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/api/properties/:id",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "properties",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "60c72b2f4f1a256a5c9b9b74"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Property",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:3000/api/properties/:id",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "properties",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "60c72b2f4f1a256a5c9b9b74"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Cities",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:3000/api/cities",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "cities"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Streets in a City",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:3000/api/streets?city=Dubai",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "streets"
+                    ],
+                    "query": [
+                        {
+                            "key": "city",
+                            "value": "Dubai"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
